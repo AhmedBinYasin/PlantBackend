@@ -87,7 +87,7 @@ router.post('/setRole', [], async (req, res) => {
 
   // return Users
   let users = await User.findOne({ Email: req.body.Email })
-  users.Role='approved'
+  users.Role=req.body.Role
   users.save()
   return res.json('success')
 })
