@@ -26,9 +26,10 @@ router.post(
         Pasword: req.body.Pasword,
       })
       return res.json({
+        user:{
         Name: req.body.Name,
-        Role: 'user',
-        Email: req.body.Email,
+        Role: 'new',
+        Email: req.body.Email,}
       })
     } else {
       return res.status(400).json({ error: 'Email already exist' })
@@ -76,8 +77,8 @@ router.post(
   },
 )
 
-// Route:3 Get AllUsers
-router.post('/ViewUsers', [], async (req, res) => {
+// Route:3 Set Role:logined
+router.post('/setRole', [], async (req, res) => {
   // return errors if found
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -85,14 +86,10 @@ router.post('/ViewUsers', [], async (req, res) => {
   }
 
   // return Users
-  let users = await User.find()
-  for (let i = 0; i < users.length; i++) {
-    users[i] = {
-      Name: users[i].Name,
-      Email: users[i].Email,
-    }
-  }
-  return res.json(users)
+  let users = await User.findOne({ Email: req.body.Email })
+  users.Role='approved'
+  users.save()
+  return res.json('success')
 })
 
 
