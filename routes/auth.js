@@ -1,5 +1,6 @@
 const express = require('express')
 const User = require('../models/User')
+const BioData = require('../models/BioData')
 const router = express.Router()
 const { body, validationResult } = require('express-validator')
 
@@ -25,11 +26,13 @@ router.post(
         Email: req.body.Email,
         Pasword: req.body.Pasword,
       })
+      BioData.create({ id: req.body.Email })
       return res.json({
-        user:{
-        Name: req.body.Name,
-        Role: 'new',
-        Email: req.body.Email,}
+        user: {
+          Name: req.body.Name,
+          Role: 'new',
+          Email: req.body.Email,
+        }
       })
     } else {
       return res.status(400).json({ error: 'Email already exist' })
@@ -85,9 +88,9 @@ router.post('/setRole', [], async (req, res) => {
     return res.status(400).json({ errors: errors.array() })
   }
 
-  // return Users
+  // return Success
   let users = await User.findOne({ Email: req.body.Email })
-  users.Role=req.body.Role
+  users.Role = req.body.Role
   users.save()
   return res.json('success')
 })
