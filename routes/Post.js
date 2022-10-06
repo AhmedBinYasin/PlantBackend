@@ -7,19 +7,17 @@ const Post = require('../models/Post')
 const postImageUploads = require('../middleware/postImageUploads')
 const postVideoUplods = require('../middleware/postVideoUplods')
 
-//Route:1 Get BioData
-// router.post('/ViewBioData', [
-//     body('Email', 'Enter a valid email').isEmail(),
-// ], async (req, res) => {
-//     //return errors if found
-//     const errors = validationResult(req)
-//     if (!errors.isEmpty()) {
-//       return res.status(400).json({ errors: errors.array() })
-//     }
-//     //return BioData
-//     let bioData = await BioData.findOne({ id: req.body.Email})
-//     return res.json(bioData)
-//   })
+//Route:1 Get FeedsData
+router.post('/GetFeeds', [], async (req, res) => {
+    //return errors if found
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+    //return BioData
+    let bioData = await Post.find()
+    return res.json(bioData)
+  })
 
 //Route:2 Set PostText
 router.post('/CreatePostText', [
