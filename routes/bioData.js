@@ -58,7 +58,7 @@ router.post('/SetBioData', [
       return res.status(400).json({ errors: errors.array() })
     }
     let bioData = await BioData.findOne({ id: req.body.Email})
-    console.log(bioData)
+    console.log(req.file)
     bioData.image='/ProfilePics/'+req.file.filename
     bioData.save(function (err) {
         if (err) {
