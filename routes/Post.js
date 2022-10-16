@@ -19,6 +19,18 @@ router.post('/GetFeeds', [], async (req, res) => {
     return res.json(bioData)
   })
 
+  //Route:1 Get FeedsData
+router.post('/GetUserFeeds', [], async (req, res) => {
+    //return errors if found
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+    //return BioData
+    let bioData = await Post.find({UploadsRelation: req.body.Email})
+    return res.json(bioData)
+  })
+
 //Route:2 Set PostText
 router.post('/CreatePostText', [
     body('id', 'Unauthorised').isEmail(),
